@@ -1,0 +1,53 @@
+{% extends "admin_blog_list.html" %}
+{% block content %}
+<div class="container">
+  <h1>Edit Blog Post</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+  
+    <div class="form-group mb-3">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+      {{ form.title.errors }}
+    </div>
+  
+    <div class="form-group mb-3">
+      {{ form.main_image.label_tag }}
+      {{ form.main_image }}
+      
+    </div>
+
+    {% if form.instance.main_image %}
+      <div class="form-group mb-3">
+        <img src="{{ form.instance.main_image.url }}" alt="Current Main Image" class="img-thumbnail resize-main" style="width: 200px;
+        height: 150px;">
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      {{ form.content.label_tag }}
+    </div>
+
+    <div class="form-group mb-3">
+      {{ form.content }}
+    </div>
+  
+    <div class="form-group mb-3" style="display: inherit">
+      {{ form.is_published.label_tag }}
+      {{ form.is_published }}
+    </div>
+  
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+  
+  <br />
+
+  <button class="Back_to_blog_button">
+    <a href="/blogs_admin">
+      Back to Blog List</a>
+    </button>
+</div>
+
+{% endblock %}

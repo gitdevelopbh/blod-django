@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <!-- Add the DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- Custom CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/autocomplete.css">
+    <link href="/static/assets/css/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+
+  <!-- Custom CSS -->
+    <!-- FA Icons -->
+    <script src="https://kit.fontawesome.com/ce08879d07.js" crossorigin="anonymous"></script>
+
+    <!-- jQuery Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!-- Counts JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+
+
+    
+    <!-- Add the DataTables JavaScript -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    
+    <title>Blogs</title>
+</head>
+
+<body>
+
+    <header></header>
+  
+<!--        <i class="d-block d-md-none fa fa-2x fa-arrow-circle-up go-top" aria-hidden="true"></i>-->
+
+    <main>
+        <div class="container-fluid">
+                <div class="row">
+                    <!-- Left global part -->
+                    <div class="p-0 col-md-3 col-lg-2">
+                        <!-- Menu left side -->
+                    </div>
+                    <!-- Central global part -->
+                    <div class="col-md-9 col-lg-10 silver-background top-background mb-3">
+                        <div class="central-container px-3">
+                            <div class="opposite-background rounded-4 p-4">
+                                <!-- message start -->
+                                {% if messages %}
+                                    <div id="error-message" class="alert alert-success message_show_popup">
+                                        <ul>
+                                            {% for message in messages %}
+                                                <li>{{ message }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <script>
+                                        // Hide the error message after 5 seconds and redirect
+                                        setTimeout(function() {
+                                            document.getElementById('error-message').style.display = 'none';
+                                        }, 2000);  // 2000 milliseconds = 2 seconds
+                                    </script>
+                                {% endif %}
+                                {% block content %}
+                                <div class="container">
+                                    <div class="show_btn_create_blogs">
+                                    <h3 class="mt-2 mb-3">Blog's List</h3>
+                                       <div id="reviewUsLink" class="admin_blog_list_link">
+                                                    <a href="/create_blog">
+                                                    Create Blog
+                                                </a></div>
+                                            </div><br>
+                                    <div class="table-responsive-lg">
+                                        <table id="admin-blog-list" class="table table-borderless align-middle orderlist mt-5">
+                                            <thead
+                                                class="small-font-custom-16 table-gray-bg text-opposite text-md-center text-xl-start mt-5">
+                                                <tr>
+                                                    <th class="d-none d-md-table-cell" scope="col">S.NO</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Title</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Published Date</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Image</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Status</th>
+                                                    <th class="d-none d-md-table-cell" scope="col">Actions</th>  
+                                                </tr>
+                                            </thead>
+                                            <tbody class="small-font-custom-14">
+                                                {% for post in blog_posts %}
+                                                <tr>
+                                                    <td class="d-md-table-cell">{{forloop.counter }}</td>
+                                                    <td class="d-none d-md-table-cell">{{ post.title}}</td>
+                                                    <td class="d-none d-md-table-cell">{{post.published_date}}</td>
+                                                    <td class="d-none d-md-table-cell">  <img class="admin_blogs_img" src="{{ post.main_image.url }}" alt="Blog Image"  width="100" height="50" style="max-width: 100%; height: auto;" /></td>
+                                                    <td class="d-none d-md-table-cell">
+                                                        <!-- {{ post.is_published}} -->
+                                                        {% if post.is_published %}
+                                                            Published
+                                                        {% else %}
+                                                            Unpublished
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="d-none d-md-table-cell">
+                                                        <div class="show_btn_main" style = "display: flex; justify-content:space-evenly; align-items: center;" >
+                                                            <div class="show_two_button">
+
+                                                                <form method="POST" action="{% url 'delete_blog_post' post.id %}">
+                                                                    {% csrf_token %}
+                                                                    <button type="button" class="del_button_del" onclick="confirmDelete(this)">Delete</button>
+                                                                </form>
+                                                            </div>
+
+                                                            <div class="show_two_button_sec">
+                                                                <!-- Add a hidden form for editing -->
+                                                                <form method="GET" action="{% url 'edit_blog_post' post.id %}">                                                                   
+                                                                    <button type="submit" class="edit_button_edit">Edit</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                {% endblock %}
+                            </div>
+                    </div>
+                </div>
+        </div>
+    </main>
+        <footer></footer>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+
+<!-- Scroll Mobile JS -->
+<script type="text/javascript" src="/static/js/scroll_to_top.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.0/standard/plugins/image/plugin.js"></script>
+
+
+
+<script>
+    function confirmDelete(button) {
+        var result = confirm("Are you sure you want to delete this item?");
+        if (result) {
+            button.parentElement.submit();
+        }
+    }
+</script>
+
+
+<script>
+    // Initialize CKEditor with options
+    CKEDITOR.replace("content", {
+      toolbar: "Basic", // Example CKEditor options
+      extraPlugins: "image", // Enable the image plugin
+      imageUploadUrl: "/upload_image_endpoint", // Replace with your image upload endpoint URL
+      // Add more CKEditor options here
+    });
+  </script>
+
+<script>
+    $(document).ready(function() {
+        $('#admin-blog-list').DataTable();
+    });
+</script>
+
+</body>
+
+</html>
+    

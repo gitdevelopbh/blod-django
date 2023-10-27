@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!-- Custom CSS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/css/autocomplete.css" />
+    <link href="/static/assets/css/style.css" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!-- Custom CSS -->
+    <!-- FA Icons -->
+    <script
+      src="https://kit.fontawesome.com/ce08879d07.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- jQuery Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Plausible script-->
+    <script
+      defer
+      data-domain="boostgram.net"
+      src="https://plausible.io/js/script.js"
+    ></script>
+
+
+
+
+    <!-- Counts JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+
+
+    <title>Admin Blogs</title>
+  </head>
+
+  <body>
+    <header></header>
+
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Left global part -->
+          <div class="p-0 col-md-3 col-lg-2">
+            <!-- Menu left side -->
+
+          </div>
+
+          <!-- Central global part -->
+          <div class="col-md-9 col-lg-10 silver-background top-background mb-3">
+
+
+            <div class="central-container px-3">
+
+              <!-- message start -->
+              {% if messages %}
+                <div id="error-message" class="alert alert-success message_show_popup">
+                  <ul>
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <script>
+                  // Hide the error message after 4 seconds (4000 milliseconds) and redirect
+                  setTimeout(function() {
+                    document.getElementById('error-message').style.display = 'none';
+                    // You can add your redirect logic here
+                  
+                  }, 4000);
+                </script>
+            {% endif %}
+                                         
+          <!-- message end -->
+          
+              <h1>Create Blog Post</h1>
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                  {{ form.title.label_tag }}
+                  {{ form.title }}
+                </div>
+              
+                <div class="form-group mb-3">
+                  {{ form.main_image.label_tag }}
+                  {{ form.main_image }}
+                </div>
+              
+                <div class="form-group">
+                  {{ form.content.label_tag }}
+                </div>
+
+                <div class="form-group mb-3">
+                  {{ form.content }}
+                </div>
+              
+                <div class="form-group mb-3">
+                  {{ form.is_published.label_tag }}
+                  {{ form.is_published }}
+                </div>
+              
+                <div class="form-group">
+                  <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+              </form>
+              <br />
+              <button class="Back_to_blog_button">
+              <a href="/blogs_admin">
+                Back to Blog List</a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/plugins/image/plugin.js"></script>
+
+
+    <!-- <script>
+      // Initialize CKEditor with options
+      CKEDITOR.replace("content", {
+        toolbar: "Basic", // Example CKEditor options
+        extraPlugins: "image", // Enable the image plugin
+        imageUploadUrl: "/upload_image_endpoint", // Replace with your image upload endpoint URL
+        // Add more CKEditor options here
+      });
+    </script> -->
+
+    <script>
+      // Initialize CKEditor with options
+      CKEDITOR.replace("content", {
+        toolbar: "Basic", // Example CKEditor options
+        extraPlugins: "image", // Enable the image plugin
+        imageUploadUrl: "/upload_image_endpoint", // Replace with your image upload endpoint URL
+        // Add more CKEditor options here
+      });
+    </script>
+
+    <!-- Scroll Mobile JS -->
+    <script type="text/javascript" src="/static/js/scroll_to_top.js"></script>
+  </body>
+</html>

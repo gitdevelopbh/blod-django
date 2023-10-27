@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %} 
+<h1 style="margin-left: 5%; margin-top: 2%;">Email Detail</h1>
+<div style="margin-left: 5%; ">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Email</button>
+    </form>
+</div>
+
+{% endblock %} 

@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+{% load static %}<!-- Table section -->
+{% block content %}
+  <section class="mt-5 mb-4 neworderlistdiv">
+    <div class="container " style="padding: 0px 98px;">
+      <h3 class="ordertitle-1 mb-5" style="
+      text-align: center;
+      background: #80808029; border-radius: 5px;">Blogs</h3>
+
+      <ul class="list_blogs">
+        {% for post in blog_posts %}
+        <li>
+          <div class="blog_list1">
+            <div class="date_publish">
+              <h2><a href="/blog/{{ post.id }}/">{{ post.title }}</a></h2>
+              <p class="mb-0">Published on {{ post.published_date}}</p>
+            </div>
+            <div class="blog_img">
+              <img src="{{ post.main_image.url }}" style="width: 200px;
+              height: 150px;" alt="Blog Image" />
+            </div>
+            <div class="blog_div_section">
+              {{ post.content|safe }}      
+            </div>
+            <a href="/blog/{{ post.id }}/">
+            <button class="button_read">...read more</button>
+          </div></a>
+        </li>
+        {% endfor %}
+      </ul><br>
+
+    <!-- Pagination Links -->
+    <div class="pagination" style="margin-bottom:50px;">
+      <span class="step-links">
+        {% if blog_posts.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ blog_posts.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current-page">{{ blog_posts.number }}</span>
+        <span class="total-pages">of {{ blog_posts.paginator.num_pages }}</span>
+        {% if blog_posts.has_next %}
+          <a href="?page={{ blog_posts.next_page_number }}">next</a>
+          <a href="?page={{ blog_posts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+
+
+  </div>
+  </section>
+{% endblock %}

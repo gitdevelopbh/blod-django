@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+{% endblock %} 
+{% block content %} 
+<!-- Table section -->
+<section class="mt-5 mb-4 neworderlistdiv">
+  {% if messages %}
+    <div id="error-message" class="alert alert-success message_show_popup">
+      <ul style="color: green;">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+      </ul>
+    </div>
+    <script>
+      // Hide the error message after 4 seconds (4000 milliseconds) and redirect
+      setTimeout(function() {
+        document.getElementById('error-message').style.display = 'none';
+        // You can add your redirect logic here
+      
+      }, 4000);
+    </script>
+  {% endif %}
+
+  <div class="container" style="padding: 0px 98px; ">
+
+    <h1 class="blog_detail_title">{{ blog_details.title }}</h1>
+    <p class="publish_date_023">Published on {{ blog_details.published_date }}</p>
+    <div class="blog_img_02">
+      <img src="{{ blog_details.main_image }}" alt="Blog Image" style="width: 200px;
+      height: 150px;"/>
+    </div>
+    <div class="blogs_details_section_02">{{ blog_details.content|safe }}</div>
+
+    <a href="{% url 'email_blog' post_id=blog_details.id %}">Share via Email</a> <br><br>
+
+    <!-- Display existing comments -->
+    <div class="comments">
+      <h1>Comments</h1>
+      {% for comment in blog_details.comment_set.all %}
+          <div class="comment">
+              <p>{{ comment.user.username }} said:</p>
+              <p>{{ comment.text }}</p>
+          </div>
+      {% endfor %}
+    </div>
+
+    <!-- Form for adding a new comment -->
+    <form method="get" action="{% url 'add_comment' post_id=blog_details.id %}">
+    
+      <button type="submit">Add Comment</button><br><br>
+    </form>
+
+    <a href="/blogs/" class="back_to_list_02">Back to Blog List</a>
+
+  </div>
+</section>
+{% endblock %}
